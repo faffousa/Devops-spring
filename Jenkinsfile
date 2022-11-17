@@ -56,7 +56,7 @@ pipeline {
        stage('Docker build')
         {
             steps {
-                 sh 'docker build -t faffousa/achat'
+                 sh 'docker build -t faffousa/tpachat'
             }
         }
         stage('Docker login')
@@ -69,7 +69,7 @@ pipeline {
       stage('Push') {
 
 			steps {
-				sh 'docker push faffousa/achat'
+				sh 'docker push faffousa/tpachat'
 			}
 		}
        
@@ -81,7 +81,7 @@ pipeline {
               }
              stage('Cleaning up') {
          steps {
-			sh "docker rmi -f faffousa/achat"
+			sh "docker rmi -f faffousa/tpachat"
          }
      } 
        		 stage('NEXUS') {
