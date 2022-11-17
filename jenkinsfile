@@ -32,7 +32,7 @@ pipeline {
         }
          stage('SonarQube analysis 1') {
             steps {
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin1'
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=fares123'
             }
         }
         stage('JUnit and Mockito Test'){
@@ -54,13 +54,13 @@ pipeline {
         stage('Docker build')
         {
             steps {
-                 sh 'docker build -t h123abidi/achat  .'
+                 sh 'docker build -t faffousa/achat  .'
             }
         }
         stage('Docker login')
         {
             steps {
-                sh 'echo $dockerhub_PSW | docker login -u h123abidi -p dckr_pat_JNwXVh3lgf36cdiVz3RnBgU6aQ4'
+                sh 'echo $dockerhub_PSW | docker login -u faffousa -p dckr_pat_9f0g2XMz_iBfcGOGIsOL0EqpP_g'
             }    
        
         }
