@@ -1,45 +1,89 @@
 pipeline {
-    agent any
 
-    stages{
-        stage('clone and clean repos'){
+        agent any
+        stages {
+                stage('Checkout Git'){
+                   
+                steps{
+                        echo 'Pulling...';
+                        git branch: 'houssem',
+                        url : 'https://github.com/MohamedAzizMaamar/DevOps.git';
+                    }
+                }
+       
+        stage('Testing maven') {
             steps {
-            	bat "cd .."
-            	bat "rmdir /S /q Devops"
-                bat "git clone -b master https://github.com/faffousa/DevopsSpring"
-                bat "mvn clean install -U -f Devops"
+                sh """mvn -version"""
+                 
             }
         }
-        stage('Test'){
-            steps{ bat "mvn test -f Devops"}
-        }
-        stage('Deploy'){
+       
+        stage('Mvn Clean') {
             steps {
-                bat "mvn package -f Devops"
-                bat "mvn deploy -f Devops"
-                bat "mvn sonar:sonar -f Devops"
-                //build image on docker
+                sh 'mvn clean'
+                 
             }
         }
-        //send email
-        stage('Email'){
+        stage('Mvn Compile') {
+            steps {
+                sh 'mvn compile'
+                 
+            }
+        }
+         stage('SonarQube analysis 1') {
+            steps {
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin1'
+            }
+        }
+        stage('JUnit and Mockito Test'){
             steps{
-                //extended email
-                emailext body: 'New Commit! Deployed to Sonar Check it.', subject: 'Hey mahdi !', to: 'mehdi.hrairi@esprit.tn'
+                script
+                {
+                    if (isUnix())
+                    {
+                        sh 'mvn --batch-mode test'
+                    }
+                    else
+                    {
+                        bat 'mvn --batch-mode test'
+                    }
+                }
             }
         }
-        //build image on docker
-        stage('Build Docker Image') {
+        
+        stage('Docker build')
+        {
+            steps {
+                 sh 'docker build -t h123abidi/achat  .'
+            }
+        }
+        stage('Docker login')
+        {
+            steps {
+                sh 'echo $dockerhub_PSW | docker login -u h123abidi -p dckr_pat_JNwXVh3lgf36cdiVz3RnBgU6aQ4'
+            }    
+       
+        }
+      stage('Push') {
 
 			steps {
-				bat 'docker build -t mahdi0606/timesheet:latest .'
+				sh 'docker push h123abidi/achat'
 			}
 		}
-		/// stage('Build Docker Mysql Images') {
-
-			///steps {
-				///bat 'docker compose up'
-			///}
-		///}
-	}
+		stage('NEXUS') {
+            steps {
+                sh 'mvn deploy -DskipTests'
+                  
+            }
+        }
+        
+       stage('Run app With DockerCompose') {
+              steps {
+                  sh "docker-compose -f docker-compose.yml up -d  "
+              }
+              }
+        
+       
+       
+    }
 }
