@@ -130,7 +130,7 @@
 		<repository>
 			<id>deploymentRepo</id>
 			<name>Nexus Repository</name>
-			<url>http://192.168.1.101:8081/demo/</url>
+			<url>http://192.168.1.101:8081/repository/demo/</url>
 		</repository>
 	</distributionManagement>
 
