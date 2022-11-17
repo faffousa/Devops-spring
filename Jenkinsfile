@@ -46,12 +46,7 @@ pipeline {
             }
        
         }
-		 stage('NEXUS') {
-            steps {
-                sh 'mvn deploy -DskipTests'
-                  
-            }
-        }
+
         stage('SonarQube analysis 1') {
             steps {
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=fares123'
@@ -89,6 +84,11 @@ pipeline {
 			sh "docker rmi -f faffousa/achat"
          }
      } 
-       
+       		 stage('NEXUS') {
+            steps {
+                sh 'mvn deploy -DskipTests'
+                  
+            }
+        }
     }
     }
