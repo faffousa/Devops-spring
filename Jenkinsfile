@@ -56,7 +56,7 @@ pipeline {
        stage('Docker build')
         {
             steps {
-                 sh 'docker build -t faffousa/achat  .'
+                 sh 'docker build -t faffousa/achat'
             }
         }
         stage('Docker login')
