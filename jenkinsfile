@@ -7,7 +7,7 @@ pipeline {
                 steps{
                         echo 'Pulling...';
                         git branch: 'houssem',
-                        url : 'https://github.com/MohamedAzizMaamar/DevOps.git';
+                        url : 'https://github.com/faffousa/DevopsSpring.git';
                     }
                 }
        
@@ -67,7 +67,7 @@ pipeline {
       stage('Push') {
 
 			steps {
-				sh 'docker push h123abidi/achat'
+				sh 'docker push faffousa/achat'
 			}
 		}
 		stage('NEXUS') {
