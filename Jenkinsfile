@@ -79,16 +79,18 @@ pipeline {
                   sh "docker-compose -f docker-compose.yml up -d  "
               }
               }
-             stage('Cleaning up') {
-         steps {
-			sh "docker rmi -f faffousa/tpachat"
-         }
-     } 
-       		 stage('NEXUS') {
+		
+		    		 stage('NEXUS') {
             steps {
                 sh 'mvn deploy -DskipTests'
                   
             }
         }
+             stage('Cleaning up') {
+         steps {
+			sh "docker rmi -f faffousa/tpachat"
+         }
+     } 
+   
     }
     }
