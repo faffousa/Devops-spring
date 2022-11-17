@@ -6,7 +6,7 @@ pipeline {
                    
                 steps{
                         echo 'Pulling...';
-                        git branch: 'faffousa',
+                        git branch: 'master',
                         url : 'https://github.com/faffousa/DevopsSpring.git';
                     }
                 }
