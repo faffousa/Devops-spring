@@ -53,12 +53,7 @@ pipeline {
             }
         }
 		
-       stage('Docker build')
-        {
-            steps {
-                 sh 'sudo docker build -t faffousa/tpachat  .'
-            }
-        }
+    
         stage('Docker login')
         {
             steps {
